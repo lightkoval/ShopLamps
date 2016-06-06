@@ -1,0 +1,185 @@
+
+@media (max-width: 1280px) {
+
+  .header_center {
+    width: 100%;
+    margin: 0;
+    .transition(1s, ease);
+  }
+
+  .content_center {
+    width: 100%;
+    margin: 0;
+    .transition(1s, ease);
+  }
+
+  .menu-container-wrapper {
+    width: 100%;
+    margin: 0;
+    .transition(1s, ease);
+  }
+
+  .product {
+    width: 33.33%;
+  }
+
+  .sales_table,
+  .sales_table th,
+  .sales_table td {
+    padding: 5px;
+    font-size: 1em;
+  }
+
+}
+
+@media (max-width: 960px) {
+
+  //Header
+  .burger-menu {
+    opacity: 1;
+  }
+
+  .burger-menu > img {
+    position: absolute;
+    top: 10px;
+    right: 30px;
+    background: @bg-dark;
+    cursor: pointer;
+  }
+
+  .logo {
+    .position(absolute, 10px, 10px);
+    z-index: 200;
+    .transition(1s, ease);
+  }
+
+  .logo__none {
+    opacity: 0;
+    .transition(1s, ease);
+  }
+
+  ul.menu {
+    .position(absolute, 58px, -1000px);
+    width: 0;
+    height: 500px;
+    overflow: hidden;
+    background: @bg-dark;
+
+  }
+
+  ul.menu-slide {
+    .position(fixed, 58px, 0);
+    width: 100%;
+    opacity: 1;
+    .transition(1s, linear);
+  }
+
+  ul.menu > li:nth-child(2) {
+    height: 280px;
+  }
+
+  ul.menu > li {
+    position: relative;
+    width: 100%;
+    height: 40px;
+    text-align: center;
+  }
+
+  ul.menu > li > a {
+    width: 100%;
+    height: 37px;
+    padding: 0;
+    line-height: 40px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.75);
+    font-size: 1.2em;
+  }
+
+  ul.menu > li:hover > a {
+    border-bottom: none;
+    background: none;
+  }
+
+  .active {
+    background: none;
+  }
+
+  ul.sub-menu {
+    height: 250px;
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+    background: none;
+  }
+
+  .sales_table,
+  .sales_table th,
+  .sales_table td {
+    padding: 0;
+    font-size: 0.95em;
+  }
+
+  input,
+  textarea {
+    width: 90%;
+    margin: 20px auto;
+    padding: 10px;
+    color: @bg-dark;
+    font-size: 18px;
+    .transition(1s, ease);
+  }
+
+  .contacts {
+    float: left;
+    width: 90%;
+  }
+  iframe {
+    width: 90%;
+    margin: 0 5%;
+  }
+
+  .contacts_form {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  //Products
+  .product {
+    width: 50%;
+  }
+
+  //Description
+  .product-img,
+  .description {
+    width: 100%;
+  }
+
+  //Sales
+  .sales_table,
+  .sales_table th,
+  .sales_table td {
+    font-size: 0.8em;
+  }
+
+  //Contacts
+  button {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 1.4em;
+  }
+
+  .button {
+    font-size: 1.4em;
+  }
+  //Footer
+  .menu-container > ul {
+    display: none;
+  }
+
+  .menu-container {
+    float: none;
+    .transition(1s, ease);
+  }
+
+
+}

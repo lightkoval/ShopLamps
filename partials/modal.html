@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lamps</title>
+    <meta charset="utf-8">
+    <meta type="keywords" value="">
+    <meta type="description" value="">
+    <!--    <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/modal-style.css">-->
+    <script src="../js/jquery-1.12.0.min.js"></script>
+    <style type="text/css">
+        body {
+            background: #2d3844;
+        }
+
+        .basket {
+            width: 500px;
+            height: 300px;
+            border-radius: 5px;
+            border: 3px #222a33 solid;
+            background: #222a33;
+            position: fixed;
+            top: 45%;
+            left: 50%;
+            margin-top: -150px;
+            margin-left: -250px;
+            display: none;
+            opacity: 0;
+            z-index: 5;
+            padding: 20px;
+        }
+
+        .basket > * {
+            color: #fffffe;
+        }
+
+        .basket #basket_close {
+            width: 21px;
+            height: 21px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            display: block;
+        }
+
+        #overlay {
+            z-index: 3;
+            position: fixed;
+            background-color: #ffffff;
+            opacity: 0.2;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+            display: none;
+        }
+
+        h3 {
+            text-align: center;
+        }
+        h4 {
+            text-align: right;
+        }
+        .goods {
+            overflow: hidden;
+            border-bottom: 1px solid #2d3844;
+        }
+
+        .goods > div {
+            float: left;
+            height: 150px;
+            width: 100px;
+        }
+
+        .goods_delete {
+
+            line-height: 150px;
+        }
+
+        .goods__name {
+            text-align: center;
+        }
+
+        .goods__add {
+            height: 100px !important;
+            padding-top: 50px;
+            text-align: center;
+        }
+
+        .goods__add > input {
+            outline: none;
+            width: 20px;
+            padding: 5px;
+            text-align: center;
+            border-radius: 2px;
+            border: none;
+            outline: none;
+            background: none;
+            color: #fffffe;
+        }
+
+        .goods__sum {
+            text-align: right;
+        }
+
+        .goods__total {
+            clear: both;
+        }
+
+        .goods__total > div {
+            float: left;
+            width: 50%;
+        }
+
+        .goods__order {
+
+            text-align: right;
+        }
+
+    </style>
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+
+
+            $('.button').click(function (event) {
+                event.preventDefault();
+                $('#overlay').fadeIn(400,
+                        function () {
+                            $('.basket')
+                                    .css('display', 'block')
+                                    .animate({opacity: 1, top: '50%'}, 200);
+                        });
+
+
+            });
+
+            $('#basket_close, #overlay').click(function () {
+                $('.basket')
+                        .animate({opacity: 0, top: '45%'}, 200,
+                        function () { // после анимации
+                            $(this).css('display', 'none');
+                            $('#overlay').fadeOut(400);
+                        }
+                );
+            });
+        });
+
+
+    </script>
+</head>
+<body>
+
+<p><a href="#" class="button" data-id-product="00211">Ссылка с окном</a></p>
+
+
+<!-- Модальное окно -->
+<div class="basket">
+    <span id="basket_close"><img src="../images/close.png"></span>
+
+    <h3>Корзина</h3>
+
+    <div class="basket__goods goods">
+        <div class="goods_delete"><img src="../images/delete-goods.png"></div>
+        <div class="goods__img"></div>
+        <div class="goods__name">
+            <h4></h4>
+
+        </div>
+        <div class="goods__add">
+            <input type="button" value="+" id="add">
+            <input type="text" value="1" min="0" max="100">
+            <input type="button" value="-" id="remove">
+        </div>
+        <div>
+            <h4>Сумма</h4>
+            <div class="goods__sum"></div>
+        </div>
+    </div>
+
+    <div class="goods__total">
+        <div>Total:</div>
+        <div class="goods__order button">Оформить заказ</div>
+    </div>
+</div>
+<div id="overlay"></div>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('.button').click(function () {
+            var idProduct = $(this).attr('data-id-product'); /*Добавить в кнопку ID*/
+            idProduct = +idProduct - 211;
+
+            var goodsImg, goodsName, goodsPrice, goodsAdd, goodsSum, goodsTotal, goodsCount = 1;
+            var goods;
+
+            $.get('../products.json', function(data, status){
+                goods = data[idProduct];
+                console.log(goods.img);
+
+                goodsImg = $('<img />').attr('src', goods.img);
+                goodsName = $('<h4></h4>').text(goods.name);
+
+                $('#add').click(function () {
+                    $(':text').val(++goodsCount);
+                });
+                $('#remove').click(function () {
+                    $(':text').val(--goodsCount);
+                });
+
+                goodsPrice = goodsCount * goods.price;
+                $('.goods__img').append(goodsImg);
+                $('.goods__name').append(goodsName, '$' + goods.price);
+                $('.goods__sum').text('$' + goodsPrice);
+
+                $('.goods_delete').click(function() {
+                    $('.goods').remove();
+                });
+
+            });
+        });
+    });
+
+
+
+</script>
+
+</body>
+</html>

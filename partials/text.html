@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lamps</title>
+    <meta charset="utf-8">
+    <meta type="keywords" value="">
+    <meta type="description" value="">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <!--    <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/modal-style.css">-->
+    <script src="../js/jquery-1.12.0.min.js"></script>
+    <style type="text/css">
+        body {
+            background: #2d3844;
+        }
+
+        .basket {
+            width: 500px;
+            height: 300px; /* Размеры должны быть фиксированы */
+            border-radius: 5px;
+            border: 3px #222a33 solid;
+            background: #222a33;
+            position: fixed; /* чтобы окно было в видимой зоне в любом месте */
+            top: 45%; /* отступаем сверху 45%, остальные 5% подвинет скрипт */
+            left: 50%; /* половина экрана слева */
+            margin-top: -150px;
+            margin-left: -250px; /* тут вся магия центровки css, отступаем влево и вверх минус половину ширины и высоты соответственно =) */
+            display: none; /* в обычном состоянии окна не должно быть */
+            opacity: 0; /* полностью прозрачно для анимирования */
+            z-index: 5; /* окно должно быть наиболее большем слое */
+            padding: 20px;
+        }
+
+        .basket > * {
+            color: #fffffe;
+        }
+
+        .basket #basket_close {
+            width: 21px;
+            height: 21px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            display: block;
+        }
+
+        #overlay {
+            z-index: 3; /* подложка должна быть выше слоев элементов сайта, но ниже слоя модального окна */
+            position: fixed; /* всегда перекрывает весь сайт */
+            background-color: #ffffff; /* черная */
+            opacity: 0.2; /* но немного прозрачна */
+            width: 100%;
+            height: 100%; /* размером во весь экран */
+            top: 0;
+            left: 0; /* сверху и слева 0, обязательные свойства! */
+            cursor: pointer;
+            display: none; /* в обычном состоянии её нет) */
+        }
+
+        h3 {
+            text-align: center;
+        }
+
+        .goods {
+            overflow: hidden;
+            border-bottom: 1px solid #2d3844;
+        }
+
+        .goods > div {
+            float: left;
+            height: 150px;
+            width: 100px;
+        }
+
+        .goods_delete {
+
+            line-height: 150px;
+        }
+
+        .goods__name {
+            text-align: center;
+        }
+
+        .goods__add {
+            height: 100px !important;
+            padding-top: 50px;
+            text-align: center;
+        }
+
+        .goods__add > input {
+            outline: none;
+            width: 20px;
+            padding: 5px;
+            text-align: center;
+            border-radius: 2px;
+            border: none;
+            outline: none;
+            background: none;
+            color: #fffffe;
+        }
+
+        .goods_add button {
+            border: none;
+            outline: none;
+            background: none;
+            color: #fffffe;
+        }
+
+        .goods__sum {
+            text-align: right;
+        }
+
+        .goods__total {
+            clear: both;
+        }
+
+        .goods__total > div {
+            float: left;
+            width: 50%;
+        }
+
+        .goods__order {
+
+            text-align: right;
+        }
+
+        .basket__header {
+            width: 100px;
+            height: 40px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+    </style>
+    <script type="text/javascript">
+
+
+        $(document).ready(function () { // вся магия после загрузки страницы
+
+
+            $('.button').click(function (event) { // ловим клик по ссылки с id="go"
+                event.preventDefault(); // выключаем стандартную роль элемента
+                $('#overlay').fadeIn(400, // сначала плавно показываем темную подложку
+                        function () { // после выполнения предъидущей анимации
+                            $('.basket')
+                                    .css('display', 'block') // убираем у модального окна display: none;
+                                    .animate({opacity: 1, top: '50%'}, 200); // плавно прибавляем прозрачность одновременно со съезжанием вниз
+                        });
+
+
+            });
+            /* Закрытие модального окна, тут делаем то же самое но в обратном порядке */
+            $('#basket_close, #overlay').click(function () { // ловим клик по крестику или подложке
+                $('.basket')
+                        .animate({opacity: 0, top: '45%'}, 200,  // плавно меняем прозрачность на 0 и одновременно двигаем окно вверх
+                        function () { // после анимации
+                            $(this).css('display', 'none'); // делаем ему display: none;
+                            $('#overlay').fadeOut(400); // скрываем подложку
+                        }
+                );
+            });
+        });
+
+
+    </script>
+</head>
+<body>
+
+<p><a href="#" class="button" data-id-product="00211">Ссылка с окном</a></p>
+
+
+<!-- Модальное окно -->
+<div class="basket">
+    <div class="basket__header"><h3>Корзина</h3></div>
+    <span id="basket_close"><img src="../images/close.png"></span>
+
+
+
+
+    <div class="basket__goods goods">
+        <div class="goods_delete"><img src="../images/delete-goods.png"></div>
+        <div class="goods__img"></div>
+        <div class="goods__name">
+            <h4></h4>
+
+        </div>
+        <div class="goods__add">
+            <input type="button" value="+" id="add">
+            <input type="text" value="1">
+            <input type="button" value="-" id="remove">
+        </div>
+        <div>
+            <h4>Сумма</h4>
+            <div class="goods__sum"></div>
+        </div>
+    </div>
+
+    <div class="goods__total">
+        <div>Total:</div>
+        <div class="goods__order button">Оформить заказ</div>
+    </div>
+</div>
+<div id="overlay"></div>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('.button').click(function () {
+            var idProduct = $(this).attr('data-id-product'); /*Добавить в кнопку ID*/
+            idProduct = +idProduct - 211;
+
+            var goodsImg, goodsName, goodsPrice, goodsAdd, goodsSum, goodsTotal, goodsCount = 1;
+            var goods;
+
+            $.get('../products.json', function(data, status){
+                goods = data[idProduct];
+                console.log(goods.img);
+
+                goodsImg = $('<img />').attr('src', goods.img);
+                goodsName = $('<h4></h4>').text(goods.name);
+
+                $('#add').click(function () {
+                    $(':text').val(++goodsCount);
+                });
+                $('#remove').click(function () {
+                    $(':text').val(--goodsCount);
+                });
+
+                goodsPrice = goodsCount * goods.price;
+                $('.goods__img').append(goodsImg);
+                $('.goods__name').append(goodsName, '$' + goods.price);
+                $('.goods__sum').text('$' + goodsPrice);
+
+                $('.goods_delete').click(function() {
+                    $('.goods').remove();
+                });
+
+            });
+        });
+    });
+
+
+
+</script>
+
+</body>
+</html>

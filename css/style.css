@@ -1,0 +1,26 @@
+body {
+    opacity: 0.8;
+    background: #222a33;
+    transition: 1s ease;
+    -o-transition: 1s ease;
+    -moz-transition: 1s ease;
+    -webkit-transition: 1s ease;
+}
+
+.overlay {
+    text-align: center;
+    line-height: 300px;
+    color: #fffffe;
+    transition: 1s ease;
+    -o-transition: 1s ease;
+    -moz-transition: 1s ease;
+    -webkit-transition: 1s ease;
+}
+
+.wrapper {
+    opacity: 0;
+    transition: 1s ease;
+    -o-transition: 1s ease;
+    -moz-transition: 1s ease;
+    -webkit-transition: 1s ease;
+}
